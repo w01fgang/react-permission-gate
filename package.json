@@ -1,6 +1,6 @@
 {
   "name": "permission-gate",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A library for handling roles and permissions in large-scale React apps",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
@@ -11,14 +11,19 @@
   "scripts": {
     "build": "yarn build:esm && yarn build:cjs",
     "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir lib/cjs"
+    "build:cjs": "tsc --module commonjs --outDir lib/cjs",
+    "postbuild": "cp ./src/index.js.flow ./lib/cjs/ && cp ./src/index.js.flow ./lib/esm/",
+    "prepublish": "yarn build"
   },
   "devDependencies": {
-    "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "eslint": "^7.29.0",
+    "jest": "^27.0.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "typescript": "^4.3.4"
+    "typescript": "^4.3.5"
   },
   "files": [
     "/lib"
