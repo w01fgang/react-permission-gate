@@ -1,0 +1,25 @@
+// @flow
+type RoleName = string;
+
+type ComponentName = string;
+
+export type Rules = {|
+  rulesMap: { [key: ComponentName]: Array<RoleName>, ... },
+  role: RoleName,
+|};
+
+declare type ProviderProps = {|
+  ...Rules,
+  children: React$Node,
+|};
+
+declare type ConsumerProps = {|
+  children: React$Node,
+  name: ComponentName,
+|};
+
+declare export function PermissionGateProvider(props: ProviderProps): React$Node;
+
+declare export function usePermission(name: ComponentName): {| ...Rules, granted: boolean |};
+
+declare export function PermissionGate(props: ConsumerProps): React$Node;
