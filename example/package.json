@@ -1,0 +1,24 @@
+{
+  "name": "with-typescript",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc"
+  },
+  "dependencies": {
+    "next": "latest",
+    "permission-gate": "latest",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^15.14.0",
+    "@types/react": "^17.0.13",
+    "@types/react-dom": "^17.0.8",
+    "eslint-config-next": "^11.0.1",
+    "typescript": "4.3"
+  },
+  "license": "MIT"
+}
