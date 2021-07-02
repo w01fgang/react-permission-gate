@@ -1,6 +1,8 @@
 # React permission gate
 inspired by https://isamatov.com/react-permissions-and-roles/
 
+Easily render or hide pieces of UI relative to the user's access role.
+
 ### Supports Typescript and Flow type
 
 
