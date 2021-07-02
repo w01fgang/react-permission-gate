@@ -1,26 +1,25 @@
-import React, { useContext, createContext } from "react";
+import React, { useContext, createContext, cloneElement, forwardRef, isValidElement, Context, Ref, ReactChild, ReactElement } from "react";
 
 export type Rules = {
   rulesMap: { [key: string]: string[] },
   role: string,
 };
 
-const RoleContext: React.Context<Rules> = createContext({
+const RoleContext: Context<Rules> = createContext({
   rulesMap: {},
   role: '',
 });
 
 type ProviderProps = {
-  children: React.ReactNode,
+  children: ReactChild,
 } & Rules;
 
 type ConsumerProps = {
-  children: React.ReactNode,
+  children: ReactChild,
   name: string,
 };
 
-function PermissionGateProvider({ children, role, rulesMap }: ProviderProps): React.ReactNode {
-
+export function PermissionGateProvider({ children, role, rulesMap }: ProviderProps): ReactElement {
   return (
     <RoleContext.Provider value={{ role, rulesMap }}>
       {children}
@@ -30,22 +29,29 @@ function PermissionGateProvider({ children, role, rulesMap }: ProviderProps): Re
 
 const hasPermission = ({ role, rulesMap, name }: Rules & { name: string }): boolean => {
   const scope = rulesMap[name];
-  if (!scope) return false;
+  if (!scope) return true;
 
   return scope.includes(role);
 };
 
-function PermissionGate({ children, name }: ConsumerProps): React.ReactNode {
+export function usePermission(name: string): Rules & { granted: boolean } {
   const { role, rulesMap }: Rules = useContext(RoleContext);
 
-  const permissionGranted = hasPermission({ role, rulesMap, name });
-
-  if (!permissionGranted) return null;
-
-  return children;
+  const granted = hasPermission({ role, rulesMap, name });
+  return { granted, role, rulesMap };
 }
 
-export default {
-  PermissionGateProvider,
-  PermissionGate,
-};
+function Gate({ children, name, ...other }: ConsumerProps, ref: Ref<HTMLElement>) {
+  const { granted } = usePermission(name);
+
+  if (!granted) return null;
+
+  if (!isValidElement(children)) {
+    console.error("Children prop is not a valid react element");
+    return null;
+  }
+
+  return cloneElement(children, { ref, ...other });
+}
+
+export const PermissionGate = forwardRef(Gate);
