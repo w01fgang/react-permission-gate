@@ -16,7 +16,7 @@ const rules = Object.freeze({
   anotherComponentName: ['admin'],
 });
 
-function MyApp({ Component, pageProps }: AppProps): ReactElement {
+function MyApp() {
   const role = 'user'; // get from authenticated user
 
   return (
