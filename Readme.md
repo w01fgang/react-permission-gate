@@ -54,3 +54,33 @@ const { permission: showComponentName, role, rulesMap, } = usePermission('compon
 ...
 {showComponentName && <div>Component available for authorized user</div>}
 ```
+### Advanced usage
+A validator function can be provided
+```javascript
+import { PermissionGateProvider } from 'permission-gate';
+...
+
+// define or get from api rules and freeze them
+const rules = Object.freeze({
+  componentName: ['admin', 'user', 'other-role'],
+  anotherComponentName: ['admin'],
+});
+
+function validator({ role, rulesMap, name }) {
+  // default validator implementation
+  const scope = rulesMap[name];
+  if (!scope) return true;
+
+  return scope.includes(role);
+}
+
+function MyApp() {
+  const role = 'user'; // get from authenticated user
+
+  return (
+    <PermissionGateProvider role={role} rulesMap={rules} validator={validator}>
+      <App />
+    </PermissionGateProvider>
+  )
+}
+```

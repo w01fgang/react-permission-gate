@@ -1,8 +1,19 @@
-import React, { useContext, createContext, cloneElement, forwardRef, isValidElement, Context, Ref, ReactChild, ReactElement } from "react";
+import React, {
+  useContext,
+  createContext,
+  cloneElement,
+  forwardRef,
+  isValidElement,
+  Context,
+  Ref,
+  ReactChild,
+  ReactElement,
+} from "react";
 
 export type Rules = {
   rulesMap: { [key: string]: string[] },
   role: string,
+  validator?: ({ role, rulesMap, name }: Rules & { name: string }) => boolean,
 };
 
 const RoleContext: Context<Rules> = createContext({
@@ -35,9 +46,9 @@ const hasPermission = ({ role, rulesMap, name }: Rules & { name: string }): bool
 };
 
 export function usePermission(name: string): Rules & { granted: boolean } {
-  const { role, rulesMap }: Rules = useContext(RoleContext);
+  const { role, rulesMap, validator = hasPermission }: Rules = useContext(RoleContext);
 
-  const granted = hasPermission({ role, rulesMap, name });
+  const granted = validator({ role, rulesMap, name });
   return { granted, role, rulesMap };
 }
 
