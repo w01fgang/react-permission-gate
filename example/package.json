@@ -10,15 +10,15 @@
   "dependencies": {
     "next": "latest",
     "permission-gate": "latest",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "@types/node": "^15.14.0",
-    "@types/react": "^17.0.13",
-    "@types/react-dom": "^17.0.8",
-    "eslint-config-next": "^11.0.1",
-    "typescript": "4.3"
+    "@types/node": "^17.0.23",
+    "@types/react": "^17.0.43",
+    "@types/react-dom": "^17.0.14",
+    "eslint-config-next": "^12.1.4",
+    "typescript": "4.6"
   },
   "license": "MIT"
 }
