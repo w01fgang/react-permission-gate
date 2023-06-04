@@ -13,7 +13,7 @@ import React, {
 export type Rules = {
   rulesMap: { [key: string]: string[] },
   role: string,
-  validator?: ({ role, rulesMap, name }: Rules & { name: string }) => boolean,
+  validator?: ({ role, rulesMap, name, permissions }: Rules & { name: string, permissions?: { [key:string]: string } }) => boolean,
 };
 
 const RoleContext: Context<Rules> = createContext({
@@ -28,6 +28,7 @@ type ProviderProps = {
 type ConsumerProps = {
   children: ReactChild,
   name: string,
+  permissions?: { [key: string]: string }, // any object that describes the permissions, which will be used in custom validator
 };
 
 export function PermissionGateProvider({ children, role, rulesMap }: ProviderProps): ReactElement {
@@ -45,15 +46,15 @@ const hasPermission = ({ role, rulesMap, name }: Rules & { name: string }): bool
   return scope.includes(role);
 };
 
-export function usePermission(name: string): Rules & { granted: boolean } {
+export function usePermission(name: string, permissions?: { [key: string]: string }): Rules & { granted: boolean } {
   const { role, rulesMap, validator = hasPermission }: Rules = useContext(RoleContext);
 
-  const granted = validator({ role, rulesMap, name });
+  const granted = validator({ role, rulesMap, name, permissions });
   return { granted, role, rulesMap };
 }
 
-function Gate({ children, name, ...other }: ConsumerProps, ref: Ref<HTMLElement>) {
-  const { granted } = usePermission(name);
+function Gate({ children, name, permissions, ...other }: ConsumerProps, ref: Ref<HTMLElement>) {
+  const { granted } = usePermission(name, permissions);
 
   if (!granted) return null;
 
