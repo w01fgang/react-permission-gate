@@ -10,10 +10,15 @@ import React, {
   ReactElement,
 } from "react";
 
+export type PermissionObject = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any,
+}
+
 export type Rules = {
   rulesMap: { [key: string]: string[] },
   role: string,
-  validator?: ({ role, rulesMap, name, permissions }: Rules & { name: string, permissions?: { [key:string]: string } }) => boolean,
+  validator?: ({ role, rulesMap, name, permissions }: Rules & { name: string, permissions?: PermissionObject }) => boolean,
 };
 
 const RoleContext: Context<Rules> = createContext({
@@ -23,7 +28,7 @@ const RoleContext: Context<Rules> = createContext({
 
 type ProviderProps = {
   children: ReactChild,
-  validator?: ({ role, rulesMap, name, permissions }: Rules & { name: string, permissions?: { [key:string]: string } }) => boolean,
+  validator?: ({ role, rulesMap, name, permissions }: Rules & { name: string, permissions?: PermissionObject }) => boolean,
 } & Rules;
 
 type ConsumerProps = {
@@ -47,7 +52,7 @@ const hasPermission = ({ role, rulesMap, name }: Rules & { name: string }): bool
   return scope.includes(role);
 };
 
-export function usePermission(name: string, permissions?: { [key: string]: string }): Rules & { granted: boolean } {
+export function usePermission(name: string, permissions?: PermissionObject): Rules & { granted: boolean } {
   const { role, rulesMap, validator = hasPermission }: Rules = useContext(RoleContext);
 
   const granted = validator({ role, rulesMap, name, permissions });
