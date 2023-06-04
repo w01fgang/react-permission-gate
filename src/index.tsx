@@ -23,6 +23,7 @@ const RoleContext: Context<Rules> = createContext({
 
 type ProviderProps = {
   children: ReactChild,
+  validator?: ({ role, rulesMap, name, permissions }: Rules & { name: string, permissions?: { [key:string]: string } }) => boolean,
 } & Rules;
 
 type ConsumerProps = {
@@ -31,9 +32,9 @@ type ConsumerProps = {
   permissions?: { [key: string]: string }, // any object that describes the permissions, which will be used in custom validator
 };
 
-export function PermissionGateProvider({ children, role, rulesMap }: ProviderProps): ReactElement {
+export function PermissionGateProvider({ children, role, rulesMap, validator }: ProviderProps): ReactElement {
   return (
-    <RoleContext.Provider value={{ role, rulesMap }}>
+    <RoleContext.Provider value={{ role, rulesMap, validator }}>
       {children}
     </RoleContext.Provider>
   )
