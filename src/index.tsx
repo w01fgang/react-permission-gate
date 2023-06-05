@@ -1,5 +1,6 @@
 import React, {
   useContext,
+  useMemo,
   createContext,
   cloneElement,
   forwardRef,
@@ -30,9 +31,10 @@ type ConsumerProps = {
   name: string,
 };
 
-export function PermissionGateProvider({ children, role, rulesMap }: ProviderProps): ReactElement {
+export function PermissionGateProvider({ children, role, rulesMap, validator }: ProviderProps): ReactElement {
+  const value = useMemo(() => ({ role, rulesMap, validator }), [role, rulesMap, validator]);
   return (
-    <RoleContext.Provider value={{ role, rulesMap }}>
+    <RoleContext.Provider value={value}>
       {children}
     </RoleContext.Provider>
   )
