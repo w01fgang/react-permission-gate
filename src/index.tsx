@@ -30,9 +30,9 @@ type ConsumerProps = {
   name: string,
 };
 
-export function PermissionGateProvider({ children, role, rulesMap }: ProviderProps): ReactElement {
+export function PermissionGateProvider({ children, role, rulesMap, validator }: ProviderProps): ReactElement {
   return (
-    <RoleContext.Provider value={{ role, rulesMap }}>
+    <RoleContext.Provider value={{ role, rulesMap, validator }}>
       {children}
     </RoleContext.Provider>
   )
