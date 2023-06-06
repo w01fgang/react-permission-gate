@@ -6,6 +6,7 @@ type ComponentName = string;
 export type Rules = {|
   rulesMap: { [key: ComponentName]: Array<RoleName>, ... },
   role: RoleName,
+  validator?: ({ role, rulesMap, name }: Rules & { name: string }) => boolean,
 |};
 
 declare type ProviderProps = {|
