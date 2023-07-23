@@ -1,6 +1,6 @@
 {
   "name": "permission-gate",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A library for handling roles and permissions in large-scale React apps",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
