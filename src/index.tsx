@@ -7,7 +7,7 @@ import React, {
   isValidElement,
   Context,
   Ref,
-  ReactChild,
+  ReactNode,
   ReactElement,
 } from "react";
 
@@ -23,11 +23,11 @@ const RoleContext: Context<Rules> = createContext({
 });
 
 type ProviderProps = {
-  children: ReactChild,
+  children: ReactNode,
 } & Rules;
 
 type ConsumerProps = {
-  children: ReactChild,
+  children: ReactNode,
   name: string,
 };
 
