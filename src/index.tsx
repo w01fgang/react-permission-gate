@@ -60,7 +60,7 @@ function Gate({ children, name, ...other }: ConsumerProps, ref: Ref<HTMLElement>
   if (!granted) return null;
 
   if (isValidElement(children)) {
-    return cloneElement(children, { ref, ...other });
+    return cloneElement(children as ReactElement<{ ref?: Ref<HTMLElement> }>, { ref, ...other });
   }
 
   return <>{children}</>;

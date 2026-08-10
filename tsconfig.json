@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
     "outDir": "lib/esm",
+    "rootDir": "src",
     "module": "esnext",
-    "target": "es5",
+    "target": "es2017",
+    // typescript is capped at <6.1 by the typescript-eslint peer range; "ignoreDeprecations"
+    // keeps moduleResolution "node" (node10) compiling, the only mode valid for both the
+    // esm build (module esnext) and the cjs build (--module commonjs).
+    "ignoreDeprecations": "6.0",
     "lib": ["es6", "dom", "esnext"],
     "jsx": "react",
     "declaration": true,

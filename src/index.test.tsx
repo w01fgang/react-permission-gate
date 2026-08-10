@@ -1,30 +1,39 @@
-import React, { createRef } from "react";
-import ReactDOM, { unmountComponentAtNode } from "react-dom";
+/// <reference types="jest" />
+import React, { act, createRef } from "react";
+import { createRoot, Root } from "react-dom/client";
 import ReactDOMServer from "react-dom/server";
-import { act } from "react-dom/test-utils";
 import { PermissionGateProvider, PermissionGate } from "./index";
 
+(globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
+
 let container: HTMLDivElement;
+let root: Root;
 let consoleErrorSpy: jest.SpyInstance;
 
 beforeEach(() => {
   container = document.createElement("div");
   document.body.appendChild(container);
   consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+  root = createRoot(container);
 });
 
 afterEach(() => {
-  unmountComponentAtNode(container);
-  container.remove();
-  const errorCalls = consoleErrorSpy.mock.calls;
-  consoleErrorSpy.mockRestore();
-  // guard: no test may trigger a React warning while the spy silences the channel
-  expect(errorCalls).toEqual([]);
+  try {
+    act(() => {
+      root.unmount();
+    });
+  } finally {
+    container.remove();
+    const errorCalls = consoleErrorSpy.mock.calls;
+    consoleErrorSpy.mockRestore();
+    // guard: no test may trigger a React warning while the spy silences the channel
+    expect(errorCalls).toEqual([]);
+  }
 });
 
 function renderIntoContainer(node: React.ReactElement) {
   act(() => {
-    ReactDOM.render(node, container);
+    root.render(node);
   });
 }
 
