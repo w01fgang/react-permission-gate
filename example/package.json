@@ -8,7 +8,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "next": "latest",
+    "next": "^12.1.4",
     "permission-gate": "latest",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
