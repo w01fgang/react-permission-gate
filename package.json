@@ -16,22 +16,19 @@
     "postbuild": "cp ./src/index.js.flow ./lib/cjs/ && cp ./src/index.js.flow ./lib/esm/",
     "prepublishOnly": "npm run build"
   },
-  "overrides": {
-    "@types/babel__traverse": "7.14.0",
-    "@types/node": "15.12.5",
-    "@types/react": "17.0.11"
-  },
   "devDependencies": {
-    "@types/jest": "^27",
-    "@types/react-dom": "^17.0.14",
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "@typescript-eslint/parser": "^5.17.0",
-    "eslint": "^7.29.0",
-    "jest": "^27.5.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "ts-jest": "^27",
-    "typescript": "4.6.3"
+    "@eslint/js": "^10.0.1",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "eslint": "^10.8.1",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "ts-jest": "^29.4.12",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.66.0"
   },
   "files": [
     "/lib"
