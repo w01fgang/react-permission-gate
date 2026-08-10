@@ -59,12 +59,11 @@ function Gate({ children, name, ...other }: ConsumerProps, ref: Ref<HTMLElement>
 
   if (!granted) return null;
 
-  if (!isValidElement(children)) {
-    console.error("Children prop is not a valid react element");
-    return null;
+  if (isValidElement(children)) {
+    return cloneElement(children, { ref, ...other });
   }
 
-  return cloneElement(children, { ref, ...other });
+  return <>{children}</>;
 }
 
 export const PermissionGate = forwardRef(Gate);
